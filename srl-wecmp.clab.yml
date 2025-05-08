@@ -18,15 +18,19 @@ topology:
     leaf1:
       mgmt-ipv4: 172.20.20.2
       mgmt-ipv6: 2001:172:20:20::2
+      startup-config: configs/leaf1.txt
     leaf2:
       mgmt-ipv4: 172.20.20.4
       mgmt-ipv6: 2001:172:20:20::4
+      startup-config: configs/leaf2.txt
     spine1:
       mgmt-ipv4: 172.20.20.3
       mgmt-ipv6: 2001:172:20:20::3
+      startup-config: configs/spine1.txt
     spine2:
       mgmt-ipv4: 172.20.20.5
       mgmt-ipv6: 2001:172:20:20::5
+      startup-config: configs/spine2.txt
   links:
       # spine-leaf links
     - endpoints: ["leaf1:e1-1", "spine1:e1-1"]
