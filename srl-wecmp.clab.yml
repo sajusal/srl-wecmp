@@ -1,0 +1,35 @@
+name: srl-evpn
+
+mgmt:
+  network: srl-evpn-lab-mgmt
+  ipv4-subnet: 172.20.20.0/24
+  ipv6-subnet: 2001:172:20:20::/64
+
+prefix: ""
+topology:
+  defaults:
+    kind: nokia_srlinux
+  kinds:
+    nokia_srlinux:
+      type: ixrx1b
+      license: license-srlinux25.txt
+      image: ghcr.io/nokia/srlinux:25.3.1
+  nodes:
+    leaf1:
+      mgmt-ipv4: 172.20.20.2
+      mgmt-ipv6: 2001:172:20:20::2
+    leaf2:
+      mgmt-ipv4: 172.20.20.4
+      mgmt-ipv6: 2001:172:20:20::4
+    spine1:
+      mgmt-ipv4: 172.20.20.3
+      mgmt-ipv6: 2001:172:20:20::3
+    spine2:
+      mgmt-ipv4: 172.20.20.5
+      mgmt-ipv6: 2001:172:20:20::5
+  links:
+      # spine-leaf links
+    - endpoints: ["leaf1:e1-1", "spine1:e1-1"]
+    - endpoints: ["leaf2:e1-2", "spine1:e1-2"]
+    - endpoints: ["leaf1:e1-25", "spine2:e1-25"]
+    - endpoints: ["leaf2:e1-26", "spine2:e1-26"]
