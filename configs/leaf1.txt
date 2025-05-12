@@ -62,3 +62,27 @@ set / network-instance default protocols bgp neighbor 192:168:10::1 afi-safi ipv
 set / network-instance default protocols bgp neighbor 192:168:10::3 peer-group ebgp
 set / network-instance default protocols bgp neighbor 192:168:10::3 export-policy [ export-underlay-v6 ]
 set / network-instance default protocols bgp neighbor 192:168:10::3 afi-safi ipv4-unicast admin-state disable
+
+set / routing-policy extended-community-set lb-ec-400 member [ link-bandwidth:64501:400G ]
+set / routing-policy extended-community-set lb-ec-100 member [ link-bandwidth:64501:100G ]
+set / routing-policy policy export-lb-ec-400 statement lb-400-1 action policy-result accept
+set / routing-policy policy export-lb-ec-400 statement lb-400-1 action bgp extended-community operation add
+set / routing-policy policy export-lb-ec-400 statement lb-400-1 action bgp extended-community method reference
+set / routing-policy policy export-lb-ec-400 statement lb-400-1 action bgp extended-community referenced-sets [ lb-ec-400 ]
+set / routing-policy policy export-lb-ec-100 statement lb-100-1 action policy-result accept
+set / routing-policy policy export-lb-ec-100 statement lb-100-1 action bgp extended-community operation add
+set / routing-policy policy export-lb-ec-100 statement lb-100-1 action bgp extended-community method reference
+set / routing-policy policy export-lb-ec-100 statement lb-100-1 action bgp extended-community referenced-sets [ lb-ec-100 ]
+
+set / network-instance default protocols bgp max-ecmp-hash-buckets-per-next-hop-group 128
+set / network-instance default protocols bgp afi-safi ipv4-unicast send-community-type [ standard extended large ]
+set / network-instance default protocols bgp afi-safi ipv4-unicast multipath allow-multiple-as true
+set / network-instance default protocols bgp afi-safi ipv4-unicast multipath ebgp maximum-paths 16
+set / network-instance default protocols bgp afi-safi ipv4-unicast multipath ebgp weighted-ecmp admin-state enable
+set / network-instance default protocols bgp afi-safi ipv4-unicast multipath ibgp maximum-paths 16
+set / network-instance default protocols bgp afi-safi ipv4-unicast multipath ibgp weighted-ecmp admin-state enable
+set / network-instance default protocols bgp afi-safi ipv6-unicast multipath allow-multiple-as true
+set / network-instance default protocols bgp afi-safi ipv6-unicast multipath ebgp maximum-paths 16
+set / network-instance default protocols bgp afi-safi ipv6-unicast multipath ebgp weighted-ecmp admin-state enable
+set / network-instance default protocols bgp neighbor 192.168.10.1 export-policy [ export-lb-ec-100 export-underlay-v4 ]
+set / network-instance default protocols bgp neighbor 192.168.10.3 export-policy [ export-lb-ec-400 export-underlay-v4 ]
