@@ -75,7 +75,6 @@ set / routing-policy policy export-lb-ec-100 statement lb-100-1 action bgp exten
 set / routing-policy policy export-lb-ec-100 statement lb-100-1 action bgp extended-community referenced-sets [ lb-ec-100 ]
 
 set / network-instance default protocols bgp max-ecmp-hash-buckets-per-next-hop-group 128
-set / network-instance default protocols bgp afi-safi ipv4-unicast send-community-type [ standard extended large ]
 set / network-instance default protocols bgp afi-safi ipv4-unicast multipath allow-multiple-as true
 set / network-instance default protocols bgp afi-safi ipv4-unicast multipath ebgp maximum-paths 16
 set / network-instance default protocols bgp afi-safi ipv4-unicast multipath ebgp weighted-ecmp admin-state enable
