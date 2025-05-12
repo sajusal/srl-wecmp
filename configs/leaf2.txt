@@ -83,3 +83,9 @@ set / network-instance default protocols bgp afi-safi ipv6-unicast multipath ebg
 set / network-instance default protocols bgp afi-safi ipv6-unicast multipath ebgp weighted-ecmp admin-state enable
 set / network-instance default protocols bgp neighbor 192.168.20.1 export-policy [ export-lb-ec-100 export-underlay-v4 ]
 set / network-instance default protocols bgp neighbor 192.168.20.3 export-policy [ export-lb-ec-400 export-underlay-v4 ]
+
+set / routing-policy policy check-lb-ec statement ec100 match bgp extended-community extended-community-set lb-ec-100
+set / routing-policy policy check-lb-ec statement ec100 action policy-result accept
+set / routing-policy policy check-lb-ec statement ec200 match bgp extended-community extended-community-set lb-ec-400
+set / routing-policy policy check-lb-ec statement ec200 action policy-result accept
+set / network-instance default protocols bgp group ebgp import-policy [ check-lb-ec ]
