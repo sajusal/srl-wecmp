@@ -49,3 +49,10 @@ set / network-instance default protocols bgp neighbor 192:168:10::2 afi-safi ipv
 set / network-instance default protocols bgp neighbor 192:168:20::2 peer-as 64502
 set / network-instance default protocols bgp neighbor 192:168:20::2 peer-group ebgp
 set / network-instance default protocols bgp neighbor 192:168:20::2 afi-safi ipv4-unicast admin-state disable
+
+set / network-instance default protocols bgp max-ecmp-hash-buckets-per-next-hop-group 128
+set / network-instance default protocols bgp afi-safi ipv4-unicast multipath allow-multiple-as true
+set / network-instance default protocols bgp afi-safi ipv4-unicast multipath ebgp maximum-paths 16
+set / network-instance default protocols bgp afi-safi ipv4-unicast multipath ebgp weighted-ecmp admin-state enable
+set / network-instance default protocols bgp afi-safi ipv4-unicast multipath ibgp maximum-paths 16
+set / network-instance default protocols bgp afi-safi ipv4-unicast multipath ibgp weighted-ecmp admin-state enable
